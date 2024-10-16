@@ -19,7 +19,7 @@ resources:
           # job_cluster_key: job_cluster
           notebook_task:
             notebook_path: ../src/0-catalog-schema-setup.sql
-          warehouse_id: ${var.warehouse_id}
+            warehouse_id: ${var.warehouse_id}
         
       # job_clusters:
       #   - job_cluster_key: job_cluster
