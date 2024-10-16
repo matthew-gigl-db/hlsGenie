@@ -24,7 +24,7 @@ SELECT current_catalog(), current_schema();
 DECLARE OR REPLACE VARIABLE crtas_stmnt STRING;
 
 SET VAR crtas_stmnt = "
-  CREATE TABLE " || catalog_use || '.' || schema_use || '.' || table_name || " AS 
+  CREATE OR REPLACE TABLE " || catalog_use || '.' || schema_use || '.' || table_name || " AS 
   SELECT
     *
   FROM 
