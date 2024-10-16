@@ -77,7 +77,7 @@ FROM
 
 -- COMMAND ----------
 
-DROP FUNCTION IF EXISTS gen_ai_description_summaries;
+-- DROP FUNCTION IF EXISTS gen_ai_description_summaries;
 
 -- COMMAND ----------
 
@@ -96,11 +96,11 @@ WITH descriptions AS (
 )
 SELECT
   t1.patient_id
-  ,description_col
-  ,gen_summary_scalar(description_col) as summary
+  ,t1.description
+  ,gen_summary_scalar(t1.description) as summary
 FROM
   descriptions t1
 
 -- COMMAND ----------
 
-SELECT * FROM gen_ai_description_summaries("conditions", "description")
+SELECT * FROM gen_ai_description_summaries("encounters", "description")
