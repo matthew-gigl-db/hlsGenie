@@ -16,10 +16,25 @@ resources:
 
       tasks:
         - task_key: 0_catalog_schema_setup
+          description: Set Up the catalog and schema for the hls_genie data
           # job_cluster_key: job_cluster
           notebook_task:
             notebook_path: ../src/0-catalog-schema-setup.sql
             warehouse_id: ${var.warehouse_id}
+        - task_key: 1_crtas
+          description: Create Table as Select from Existing Tables Using forEach Loop  
+          depends_on:
+            - task_key: 0_catalog_schema_setup
+          for_each_task:
+            inputs: "['allergies', 'careplans', 'claims', 'claims_transactions', 'conditons', 'devices', 'encounters', 'imaging_studies', 'immunizations', 'medications', 'observations', 'organizations', 'patients', 'payer_transitions', 'payers', 'prodecures', 'providers', 'supplies']"
+            concurrency: 6
+            task:
+              task_key: crtas_iteration
+              notebook_task:
+                notebook_path: ../src/1-crtas.sql
+                base_parameters:
+                  table_name: "{{input}}"
+                warehouse_id: ${var.warehouse_id}
         
       # job_clusters:
       #   - job_cluster_key: job_cluster
