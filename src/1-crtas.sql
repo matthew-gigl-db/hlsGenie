@@ -13,4 +13,27 @@ SET VARIABLE table_name = :table_name;
 
 -- COMMAND ----------
 
+EXECUTE IMMEDIATE "USE IDENTIFIER(catalog_use || '.' || schema_use)";
 
+-- COMMAND ----------
+
+SELECT current_catalog(), current_schema();
+
+-- COMMAND ----------
+
+DECLARE OR REPLACE VARIABLE crtas_stmnt STRING;
+
+SET VAR crtas_stmnt = "
+  CREATE TABLE " || catalog_use || '.' || schema_use || '.' || table_name || " AS 
+  SELECT
+    *
+  FROM 
+    " || catalog_original || '.' || schema_original || '.' || table_name || "
+  ;
+";
+
+SELECT crtas_stmnt;
+
+-- COMMAND ----------
+
+EXECUTE IMMEDIATE crtas_stmnt;
