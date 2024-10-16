@@ -40,5 +40,5 @@ resources:
           default: ${bundle.target}
         - name: bundle.catalog
           default: mgiglia
-        - name: bundle.catalog
+        - name: bundle.schema
           default: hls_genie
