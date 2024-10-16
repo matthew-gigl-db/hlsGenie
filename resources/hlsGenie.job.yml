@@ -26,8 +26,8 @@ resources:
           depends_on:
             - task_key: 0_catalog_schema_setup
           for_each_task:
-            inputs: '["allergies", "careplans", "claims", "claims_transactions", "conditions", "devices", "encounters","imaging_studies", "immunizations", "medications", "observations", "organizations", "patients", "payer_transitions",  "payers", "procedures", "providers", "supplies"]'
-            concurrency: 6
+            inputs: '["allergies", "careplans", "claims", "claims_transactions", "conditions", "devices", "encounters", "imaging_studies", "immunizations", "medications", "observations", "organizations", "patients", "payer_transitions",  "payers", "procedures", "providers", "supplies"]'
+            concurrency: 18
             task:
               task_key: crtas_iteration
               notebook_task:
