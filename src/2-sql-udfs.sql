@@ -35,6 +35,10 @@ SELECT * FROM gen_summary(
 
 -- COMMAND ----------
 
+-- DROP FUNCTION IF EXISTS concat_descriptions;
+
+-- COMMAND ----------
+
 CREATE OR REPLACE FUNCTION concat_descriptions(
   table_name STRING COMMENT "The table name to query for descriptions."
   ,description_col STRING COMMENT "The description column to concanate into a single string."
@@ -53,6 +57,10 @@ GROUP BY patient_id;
 -- COMMAND ----------
 
 SELECT * FROM concat_descriptions('careplans', 'description')
+
+-- COMMAND ----------
+
+SELECT * FROM concat_descriptions("encounters", "description") LIMIT 100
 
 -- COMMAND ----------
 
@@ -97,10 +105,36 @@ WITH descriptions AS (
 SELECT
   t1.patient_id
   ,t1.description
-  ,gen_summary_scalar(t1.description) as summary
+  ,ai_summarize(t1.description, 100) as summary
 FROM
   descriptions t1
 
 -- COMMAND ----------
 
 SELECT * FROM gen_ai_description_summaries("encounters", "description")
+
+-- COMMAND ----------
+
+CREATE OR REPLACE FUNCTION gen_ai_description_summaries(
+  table_name STRING COMMENT "The table name to query for descriptions."
+  ,description_col STRING COMMENT "The description column to concanate into a single string."
+)
+RETURNS TABLE(
+  patient_id STRING COMMENT "The unique patient identifier."
+  ,description STRING COMMENT "The concatendated descriptions of the requested descriiption column for the patient's records in a comma-separated string."
+  ,summary STRING COMMENT "Returns a summary of the input text or data."
+)
+RETURN
+WITH descriptions AS (
+  SELECT * FROM concat_descriptions(table_name, description_col) LIMIT 100
+)
+SELECT
+  t1.patient_id
+  ,t1.description
+  ,ai_summarize(t1.description, 100) as summary
+FROM
+  descriptions t1
+
+-- COMMAND ----------
+
+SELECT 2+2
