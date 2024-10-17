@@ -138,3 +138,8 @@ FROM
 -- COMMAND ----------
 
 SELECT 2+2
+
+-- COMMAND ----------
+
+-- MAGIC %md
+-- MAGIC This is markdown.
