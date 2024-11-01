@@ -40,7 +40,7 @@ resources:
           depends_on:
             - task_key: 1_crtas
           for_each_task:
-            inputs: '[{"table": "careplans", "pk": "careplan_id"}, {"table": "claims", "pk": "claim_id"}, {"table": "claims_transactions", "pk": "claims_transactions_id"}, {"table": "encounters", "pk": "encounter_id"}, {"table": "organizations", "pk": "organization_id"}, {"table": "patients", "pk": "patient_id"}, {"table": "claims_transactions", "pk": "claims_transactions_id"}, {"table": "payers", "pk": "payer_id"}, {"table": "providers", "pk": "provider_id"}]'
+            inputs: '[{"table": "careplans", "pk": "careplan_id"}, {"table": "claims", "pk": "claim_id"}, {"table": "claims_transactions", "pk": "claims_transactions_id"}, {"table": "encounters", "pk": "encounter_id"}, {"table": "organizations", "pk": "organization_id"}, {"table": "patients", "pk": "patient_id"}, {"table": "payers", "pk": "payer_id"}, {"table": "providers", "pk": "provider_id"}]'
             concurrency: 18
             task:
               task_key: pks_iteration
