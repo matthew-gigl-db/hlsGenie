@@ -35,6 +35,29 @@ resources:
                 base_parameters:
                   table_name: "{{input}}"
                 warehouse_id: ${var.warehouse_id}
+        - task_key: 3_set_pks
+          description: Set Primary Key Constraints Using forEach Loop  
+          depends_on:
+            - task_key: 1_crtas
+          for_each_task:
+            inputs: "[{'table': 'careplans', 'pk': 'careplan_id'}
+                      ,{'table': 'claims', 'pk': 'claim_id'}
+                      ,{'table': 'claims_transactions', 'pk': 'claims_transactions_id'}
+                      ,{'table': 'encounters', 'pk': 'encounter_id'}
+                      ,{'table': 'organizations', 'pk': 'organization_id'}
+                      ,{'table': 'patients', 'pk': 'patient_id'}
+                      ,{'table': 'claims_transactions', 'pk': 'claims_transactions_id'}
+                      ,{'table': 'payers', 'pk': 'payer_id'}
+                      ,{'table': 'providers', 'pk': 'provider_id'}]"
+            concurrency: 18
+            task:
+              task_key: pks_iteration
+              notebook_task:
+                notebook_path: ../src/3-set-pks.sql
+                base_parameters:
+                  table_name: "{{input.table}}"
+                  primary_key: "{{input.pk}}"
+                warehouse_id: ${var.warehouse_id}
         
       # job_clusters:
       #   - job_cluster_key: job_cluster
