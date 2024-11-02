@@ -99,14 +99,16 @@ resources:
             ,{"table": "supplies", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"}
             ,{"table": "supplies", "table_fk_column": "encounter_id", "fk": "encounter_id", "f_table": "encounters"}  
             ]'
-            concurrency: 18
+            concurrency: 24
             task:
               task_key: fks_iteration
               notebook_task:
                 notebook_path: ../src/4-set-fks.sql
                 base_parameters:
                   table_name: "{{input.table}}"
-                  primary_key: "{{input.pk}}"
+                  table_fk_column: "{{input.table_fk_column}}"
+                  foriegn_key: "{{input.fk}}"
+                  foriegn_table: "{{input.f_table}}"
                 warehouse_id: ${var.warehouse_id}
         
         
