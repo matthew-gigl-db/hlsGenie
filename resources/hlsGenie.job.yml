@@ -50,6 +50,65 @@ resources:
                   table_name: "{{input.table}}"
                   primary_key: "{{input.pk}}"
                 warehouse_id: ${var.warehouse_id}
+        - task_key: 4_set_fks
+          description: Set Foriegn Key Constraints Using forEach Loop  
+          depends_on:
+            - task_key: 3_set_pks
+          for_each_task:
+            inputs: '[{"table": "allergies", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"}
+            ,{"table": "allergies", "table_fk_column": "encounter_id", "fk": "encounter_id", "f_table": "encounters"} 
+            ,{"table": "careplans", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"}
+            ,{"table": "careplans", "table_fk_column": "encounter_id", "fk": "encounter_id", "f_table": "encounters"} 
+            ,{"table": "claims", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"} 
+            ,{"table": "claims", "table_fk_column": "provider_id", "fk": "provider_id", "f_table": "providers"}
+            ,{"table": "claims", "table_fk_column": "primary_patient_insurance_id", "fk": "payer_id", "f_table": "payers"} 
+            ,{"table": "claims", "table_fk_column": "secondary_patient_insurance_id", "fk": "payer_id", "f_table": "payers"}  
+            ,{"table": "claims", "table_fk_column": "referring_provider_id", "fk": "provider_id", "f_table": "providers"}  
+            ,{"table": "claims", "table_fk_column": "supervising_provider_id", "fk": "provider_id", "f_table": "providers"} 
+            ,{"table": "claims", "table_fk_column": "appointment_id", "fk": "encounter_id", "f_table": "encounters"}  
+            ,{"table": "claims_transactions", "table_fk_column": "claim_id", "fk": "claim_id", "f_table": "claims"} 
+            ,{"table": "claims_transactions", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"}
+            ,{"table": "claims_transactions", "table_fk_column": "place_of_service", "fk": "organization_id", "f_table": "organizations"}
+            ,{"table": "claims_transactions", "table_fk_column": "appointment_id", "fk": "encounter_id", "f_table": "encounters"}
+            ,{"table": "claims_transactions", "table_fk_column": "patient_insurance_id", "fk": "payer_id", "f_table": "payers"}
+            ,{"table": "claims_transactions", "table_fk_column": "provider_id", "fk": "provider_id", "f_table": "providers"}
+            ,{"table": "claims_transactions", "table_fk_column": "supervising_provider_id", "fk": "provider_id", "f_table": "providers"}
+            ,{"table": "conditions", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"}
+            ,{"table": "conditions", "table_fk_column": "encounter_id", "fk": "encounter_id", "f_table": "encounters"}
+            ,{"table": "devices", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"}
+            ,{"table": "devices", "table_fk_column": "encounter_id", "fk": "encounter_id", "f_table": "encounters"} 
+            ,{"table": "encounters", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"}
+            ,{"table": "encounters", "table_fk_column": "organization_id", "fk": "organization_id", "f_table": "organizations"}  
+            ,{"table": "encounters", "table_fk_column": "provider_id", "fk": "provider_id", "f_table": "providers"}
+            ,{"table": "encounters", "table_fk_column": "payer_id", "fk": "payer_id", "f_table": "payers"}    
+            ,{"table": "imaging_studies", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"}
+            ,{"table": "imaging_studies", "table_fk_column": "encounter_id", "fk": "encounter_id", "f_table": "encounters"}
+            ,{"table": "immunizations", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"}
+            ,{"table": "immunizations", "table_fk_column": "encounter_id", "fk": "encounter_id", "f_table": "encounters"}
+            ,{"table": "medications", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"}
+            ,{"table": "medications", "table_fk_column": "payer_id", "fk": "payer_id", "f_table": "payers"}
+            ,{"table": "medications", "table_fk_column": "encounter_id", "fk": "encounter_id", "f_table": "encounters"} 
+            ,{"table": "observations", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"}
+            ,{"table": "observations", "table_fk_column": "encounter_id", "fk": "encounter_id", "f_table": "encounters"}
+            ,{"table": "payer_transitions", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"}
+            ,{"table": "payer_transitions", "table_fk_column": "payer_id", "fk": "payer_id", "f_table": "payers"}
+            ,{"table": "payer_transitions", "table_fk_column": "secondary_patient_id", "fk": "payer_id", "f_table": "payers"}
+            ,{"table": "procedures", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"}
+            ,{"table": "procedures", "table_fk_column": "encounter_id", "fk": "encounter_id", "f_table": "encounters"}
+            ,{"table": "providers", "table_fk_column": "organization_id", "fk": "organization_id", "f_table": "organizations"}
+            ,{"table": "supplies", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"}
+            ,{"table": "supplies", "table_fk_column": "encounter_id", "fk": "encounter_id", "f_table": "encounters"}  
+            ]'
+            concurrency: 18
+            task:
+              task_key: fks_iteration
+              notebook_task:
+                notebook_path: ../src/4-set-fks.sql
+                base_parameters:
+                  table_name: "{{input.table}}"
+                  primary_key: "{{input.pk}}"
+                warehouse_id: ${var.warehouse_id}
+        
         
       # job_clusters:
       #   - job_cluster_key: job_cluster
