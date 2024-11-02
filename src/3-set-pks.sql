@@ -54,7 +54,7 @@ EXECUTE IMMEDIATE drop_pk;
 DECLARE OR REPLACE VARIABLE set_pk STRING;
 
 SET VARIABLE set_pk = "ALTER TABLE IDENTIFIER(table_use) ADD CONSTRAINT " || table_use || "_pk PRIMARY KEY ("|| primary_key || ")";
-SELECT set_pk;
+SELECT set_pk; 
 
 -- COMMAND ----------
 
