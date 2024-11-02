@@ -55,19 +55,3 @@ SELECT set_fk;
 -- COMMAND ----------
 
 EXECUTE IMMEDIATE set_fk;
-
--- COMMAND ----------
-
--- ALTER TABLE claims ADD CONSTRAINT claims_patients_fk FOREIGN KEY (patient_id) REFERENCES patients(patient_id);
-
--- COMMAND ----------
-
--- ALTER TABLE claims ADD CONSTRAINT claims_providers_fk FOREIGN KEY (provider_id) REFERENCES providers(provider_id);
-
--- COMMAND ----------
-
--- ALTER TABLE claims ADD CONSTRAINT claims_primary_ins_fk FOREIGN KEY (primary_patient_insurance_id) REFERENCES payers(payer_id);
-
--- COMMAND ----------
-
--- ALTER TABLE claims ADD CONSTRAINT claims_secondary_ins_fk FOREIGN KEY (secondary_patient_insurance_id) REFERENCES payers(payer_id);
