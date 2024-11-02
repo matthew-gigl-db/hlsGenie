@@ -48,7 +48,7 @@ EXECUTE IMMEDIATE drop_fk;
 
 DECLARE OR REPLACE VARIABLE set_fk STRING;
 
-SET VARIABLE set_fk = "ALTER TABLE IDENTIFIER(table_use) ADD CONSTRAINT " || table_use || "_" || foriegn_table || "_" || table_fk_column || "_fk FOREIGN KEY (" || table_fk_column || ") REFERENCES " || foriegn_table|| "(" || table_fk_column ||");";
+SET VARIABLE set_fk = "ALTER TABLE IDENTIFIER(table_use) ADD CONSTRAINT " || table_use || "_" || foriegn_table || "_" || table_fk_column || "_fk FOREIGN KEY (" || table_fk_column || ") REFERENCES " || foriegn_table|| "(" || foriegn_key ||");";
 
 SELECT set_fk;
 
