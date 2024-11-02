@@ -92,7 +92,7 @@ resources:
             ,{"table": "observations", "table_fk_column": "encounter_id", "fk": "encounter_id", "f_table": "encounters"}
             ,{"table": "payer_transitions", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"}
             ,{"table": "payer_transitions", "table_fk_column": "payer_id", "fk": "payer_id", "f_table": "payers"}
-            ,{"table": "payer_transitions", "table_fk_column": "secondary_patient_id", "fk": "payer_id", "f_table": "payers"}
+            ,{"table": "payer_transitions", "table_fk_column": "secondary_payer_id", "fk": "payer_id", "f_table": "payers"}
             ,{"table": "procedures", "table_fk_column": "patient_id", "fk": "patient_id", "f_table": "patients"}
             ,{"table": "procedures", "table_fk_column": "encounter_id", "fk": "encounter_id", "f_table": "encounters"}
             ,{"table": "providers", "table_fk_column": "organization_id", "fk": "organization_id", "f_table": "organizations"}
