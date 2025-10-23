@@ -50,7 +50,7 @@ RETURNS TABLE(
 RETURN 
 SELECT patient_id, 
        concat_ws(', ', collect_list(description)) AS descriptions
-FROM careplans
+FROM identifier(table_name)
 GROUP BY patient_id;
 
 
